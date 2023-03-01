@@ -16,17 +16,10 @@
 </head>
 
 <body onresize="/*timeline.checkResize();*/">
-<h1>Timeline grouping performance</h1>
+<h1>Timeline de Sighums</h1>
 
 <p>
-  Choose a number of items:
-  <a href="?count=100">100</a>,
-  <a href="?count=1000">1000</a>,
-  <a href="?count=10000">10000</a>,
-  <a href="?count=100000">100000</a>
-<p>
-<p>
-  Current number of items: <span id='count'>100</span>
+  Vuelos programados: <span id='count'>100</span>
 </p>
 
 <div id="visualization"></div>
@@ -50,23 +43,30 @@
   // get selected item count from url parameter
   var count = (Number(gup('count')) || 100);
 
+
   // create groups
-  var groups = new vis.DataSet([
+  let aviones = [
     {id: 1, content: 'AV2304'},
     {id: 2, content: 'XQS-334'},
-    {id: 3, content: 'OTRO-VUELO'},
-    {id: 4, content: 'MARIMONDÁ'}
-  ]);
+    {id: 3, content: 'NT345TF'},
+    {id: 4, content: 'OTRO-VUELO'},
+    {id: 5, content: 'MARIMONDÁ'},
+    {id: 6, content: 'CAREVER'},
+    {id: 7, content: '67B5F4'},
+    {id: 8, content: 'R87344'},
+    {id: 9, content: 'QWERTY'}
+  ]
+  var groups = new vis.DataSet(aviones);
 
   // create items
   var items = new vis.DataSet();
 
   var order = 1;
   var truck = 1;
-  for (var j = 0; j < 4; j++) {
+  for (var j = 0; j < aviones.length; j++) {
     var date = new Date();
-    for (var i = 0; i < count/4; i++) {
-      date.setHours(date.getHours() + (i == 0 ? 0 : 24) +  3 * (Math.random() < 0.2));
+    for (var i = 0; i < count/aviones.length; i++) {
+      date.setHours(date.getHours() + (i == 0 ? 0 : 24) +  2 * (Math.random() < 0.3)) + 2*i;
       var start = new Date(date);
 
       date.setHours(date.getHours() + 3 + Math.floor(Math.random()*3));
@@ -80,7 +80,7 @@
         group: truck,
         start: start,
         end: end,
-        content: String(end.getHours()-start.getHours()) + " horas, pilas cachón!"
+        content: String(diffHours) + " horas, pilas cachón!"
       });
 
       order++;
